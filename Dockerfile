@@ -35,7 +35,8 @@ RUN wget https://ftp.gnu.org/gnu/autoconf/autoconf-2.72.tar.gz -O- | tar xz && \
 ENV PATH=/home/develop/.local/bin:${PATH}
 
 # Build crosstool-ng
-RUN git clone -b master --single-branch --depth 1 \
+ARG CT_NG_TAG
+RUN git clone -b $CT_NG_TAG --depth 1 \
         https://github.com/crosstool-ng/crosstool-ng.git
 RUN cd crosstool-ng && git show --summary && \
     ./bootstrap && \
@@ -48,7 +49,8 @@ RUN cd crosstool-ng && git show --summary && \
 # Patches
 COPY --chown=develop:develop patches patches
 # https://www.raspberrypi.org/forums/viewtopic.php?f=91&t=280707&p=1700861#p1700861
-RUN wget https://ftp.debian.org/debian/pool/main/b/binutils/binutils_2.43.1-3.debian.tar.xz -O- | \
+ARG BINUTIL_VERSION
+RUN echo BINUTIL_VERSION=${BINUTIL_VERSION} && wget https://ftp.debian.org/debian/pool/main/b/binutils/binutils_${BINUTIL_VERSION}.debian.tar.xz -O- | \
     tar xJ debian/patches/129_multiarch_libpath.patch && \
     mkdir -p patches/binutils/2.43.1 && \
     mv debian/patches/129_multiarch_libpath.patch patches/binutils/2.43.1 && \
