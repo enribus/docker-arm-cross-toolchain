@@ -14,7 +14,7 @@
 
        https://github.com/crosstool-ng/crosstool-ng/releases
 
-2. build the image
+1. build the image
 
     ```sh
     export HOST_TRIPLE=armv6-rpi-linux-gnueabihf
@@ -31,4 +31,12 @@
     --build-arg GCC_VERSION=${GCC_VERSION} \
     --build-arg CT_NG_TAG=${CT_NG_TAG} \
     .
+    ```
+
+1. check the image
+
+    ```sh
+    $ docker image ls
+    REPOSITORY                   TAG                                    IMAGE ID       CREATED          SIZE
+    docker-arm-cross-toolchain   armv6-rpi-linux-gnueabihf-14-2-1.0.0   20a9a971fcd4   12 minutes ago   697MB
     ```
